@@ -5,13 +5,13 @@ pipeline {
 
         stage('Test') {
             steps {
-              echo "testing application ..."
+                echo "testing application ..."
             }
         }
 
         stage('Build Docker Image') {
             steps {
-              echo "building application"
+                echo "building application"
             }
         }
 
@@ -26,6 +26,8 @@ pipeline {
             }
         }
 
+    } // ✅ closes stages
+
     post {
         success {
             echo 'Deployment successful!'
@@ -34,4 +36,4 @@ pipeline {
             echo 'Pipeline failed!'
         }
     }
-}
+} // ✅ closes pipeline
