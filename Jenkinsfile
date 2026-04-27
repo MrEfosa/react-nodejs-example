@@ -17,13 +17,14 @@ pipeline {
 
         stage('Deploy') {
             steps {
-              sshagent(['ec2-server-key']) {
-                    def dockerCmd = 'docker run -d -p 80:80  sirdavidchris/demo-app:1.0'
-                    sh "ssh -o StrictHostKeyChecking=no ec2-user@100.52.234.62 ${dockerCmd}"
-                 }
+                sshagent(['ec2-server-key']) {
+                    script {
+                        def dockerCmd = "docker run -d -p 80:80 sirdavidchris/demo-app:1.0"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@100.52.234.62 '${dockerCmd}'"
+                    }
+                }
             }
         }
-    }
 
     post {
         success {
