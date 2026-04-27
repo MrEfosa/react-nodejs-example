@@ -15,9 +15,12 @@ pipeline {
             }
         }
 
-        stage('Deploy Container') {
+        stage('Deploy') {
             steps {
-              echo "deploying app ..."
+                def dockerCmd = 'docker run -d -p 80:80  sirdavidchris/demo-app:1.0'
+              sshagent(['ec2-server-key']) {
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@100.52.234.62 ${dockerCmd}"
+                 }
             }
         }
     }
